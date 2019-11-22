@@ -68,7 +68,7 @@
             this.loadData();
         },
         methods: {
-             loadData(){
+            loadData(){
                 http.get('getCar',{color: this.color}, (data) => {
                     this.arr = data.data.results;
                 });
