@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import http from '../../http/http.js';
+    import {get} from '../../http/http.js';
     export default {
         data() {
             return {
@@ -68,14 +68,12 @@
             this.loadData();
         },
         methods: {
-            loadData(){
-                http.get('getCar',{color: this.color}, (data) => {
-                    this.arr = data.data.results;
-                });
+            async loadData(){
+                const {results} = await get('getCar',{color: this.color}).then(data => data.data);
+                this.arr = results; 
             },
         },
         watch: {
-           
             color(v){
                 this.color = v;
                 this.page = 1;
