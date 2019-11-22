@@ -1,38 +1,28 @@
 <template>
     <div>
-        <input type="file" ref="kuang">
-        <el-button type="success" @click="up">异步上传</el-button>
-        
-        <form action="1.php" method="post" enctype="multipart/form-data">
-            <input type="file">
-            <input type="submit">
-        </form>
+        <p>请上传身份证正面（人像面）照片：</p>
+        <div>
+            <up-box />
+        </div>
+        <p>请上传身份证背面（国徽面）照片：</p>
+        <div>
+            <up-box />
+        </div>
     </div>
 </template>
 
 <script>
-    import http from '../../http/http.js';
+    import upBox from './up-box.vue';
 
     export default {
-        methods: {
-            up () {
-                // 创建虚拟表单
-                var fd = new FormData();
-                // 追加图片文件
-                fd.append('tupian', this.$refs.kuang.files[0]);
-                // Ajax上传，上传的不是图片，而是虚拟表单
-                http.post(
-                    'http://127.0.0.1:3000/upload', 
-                    fd,
-                    {
-                        headers: {'Content-Type': 'multipart/form-data'}
-                    }
-                );
-            }
+        components: {
+            'up-box': upBox
         }
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="less" scoped>
+    p{
+        line-height: 300%;
+    }
 </style>
