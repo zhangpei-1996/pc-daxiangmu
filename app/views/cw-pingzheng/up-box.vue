@@ -12,7 +12,8 @@
     export default {
         data() {
             return {
-                base64: ''
+                base64: '',
+                file: null
             }
         },
         methods: {
@@ -27,6 +28,8 @@
             changeHan () {
                 // 得到图片
                 let thepic = this.$refs.kuang.files[0];
+                // 设置图片文件
+                this.file = thepic;
                 // 上传前预览
                 let fr = new FileReader();
                 // 读取这个图片
@@ -44,12 +47,16 @@
     .upbox{
         width: 500px;
         height:300px;
-        border: 1px solid #333;
+        border: 1px solid rgb(195, 193, 193);
         position: relative;
         cursor: pointer;
         background-size:cover;
         background-position:center center;
         background-repeat: no-repeat;
+
+        &:hover i{
+            color: orange;
+        }
         i{
             position: absolute;
             font-size: 90px;

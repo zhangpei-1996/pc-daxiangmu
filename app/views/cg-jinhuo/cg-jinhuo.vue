@@ -2,7 +2,7 @@
     <div>
         <h1>我是采购进货</h1>
         <el-checkbox-group v-model="color">
-            <el-checkbox v-for="item in ['红', '黑', '白', '蓝']" :label="item"></el-checkbox>
+            <el-checkbox v-for="item in ['红', '黑', '白', '蓝']" :key="item" :label="item"></el-checkbox>
         </el-checkbox-group>
         <el-table
             :data="arr"

@@ -41,5 +41,13 @@ module.exports = {
     plugins: [
         // 请确保引入这个插件！
         new VueLoaderPlugin()
-    ]
+    ],
+    devServer: {
+        proxy: {
+            "/api": {
+              target: "http://localhost:3000",
+              pathRewrite: {"^/api" : ""}
+            }
+        }
+    }
 };

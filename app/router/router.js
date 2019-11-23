@@ -18,6 +18,14 @@ const router = new VueRouter({
                     }
                 },
                 {
+                    path: 'profile',
+                    component: () => import('../views/profile/Profile.vue'),
+                    name: 'profile',
+                    meta: {
+                        'A': 'profile'
+                    }
+                },
+                {
                     path: 'caigou',
                     component: () => import('../layouts/Side.vue'),
                     name: 'caigou',
@@ -86,9 +94,14 @@ const router = new VueRouter({
             ]
         },
         {
+            path: '/login',
+            component: () => import('../views/login/Login.vue'),
+            name: 'login'
+        },
+        {
             path: '*',
             redirect: {
-                name: 'pingzheng'
+                name: 'index'
             }
         }
     ]
