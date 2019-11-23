@@ -25,8 +25,8 @@
     export default {
         data() {
             return {
-                username: '',
-                password: ''
+                username: 'xiaohong',
+                password: '123456'
             }
         },
         methods: {
@@ -53,7 +53,7 @@
                         'type': 'success'
                     });
                     this.$router.push({
-                        name: 'index'
+                        name: 'profile'
                     });
                 }else{
                     this.$message({

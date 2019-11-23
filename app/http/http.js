@@ -49,6 +49,14 @@ const getConfig = {
     },
     userinfo(){
         return instance.get('/api/userinfo');
+    },
+    cut({x,y,w,h,filename}){
+        return instance.get('/api/cut?' + querystring.stringify({
+            x,y,w,h,filename
+        }));
+    },
+    tuichu(){
+        return instance.get('/api/logout');
     }
 };
 

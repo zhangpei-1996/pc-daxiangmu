@@ -8,7 +8,7 @@
            <div class="avatar">
                <el-dropdown placement="bottom" @change="alert(123)">
                     <span>
-                        <el-avatar v-if="avatar != ''" :src="'http://127.0.0.1:3000/avatars/' + avatar"   ></el-avatar>
+                        <el-avatar v-if="avatar != ''" :src="'http://127.0.0.1:3000/avatars/' + $store.state.user.avatar"   ></el-avatar>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>
@@ -16,7 +16,7 @@
                                 更改个人资料
                             </router-link>
                         </el-dropdown-item>
-                        <el-dropdown-item>退出登录</el-dropdown-item>
+                        <el-dropdown-item @click="tuichu">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -60,6 +60,12 @@
             this.$store.state.user.nickname = nickname;
         },
         methods: {
+            tuichu(){
+                get('tuichu');
+                this.$router.push({
+                    'name': 'login'
+                });
+            },
             selectHan(v){
                 this.$router.push({
                     name: v

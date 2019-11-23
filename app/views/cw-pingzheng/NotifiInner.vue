@@ -45,7 +45,7 @@
             // 在虚拟表单中追加图片
             form1.append('tupian', this.zhengmian);
             // 提交虚拟表单
-            http.post('/upload', form1, {
+            http.post('/api/upload', form1, {
                 // 头部
                 headers: {'Content-Type': 'multipart/form-data'},
                 // 进度
@@ -69,7 +69,7 @@
             // 在虚拟表单中追加图片
             form2.append('tupian', this.fanmian);
             // 提交虚拟表单
-            http.post('/upload', form2, {
+            http.post('/api/upload', form2, {
                 // 头部
                 headers: {'Content-Type': 'multipart/form-data'},
                 // 进度
