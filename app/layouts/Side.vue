@@ -37,7 +37,20 @@
                     <span slot="title">专项业务管理</span>
                 </el-menu-item>
             </el-menu>
+
+             <el-menu
+                :default-active="B"
+                class="el-menu-vertical-demo"
+                @select="selectHan"
+                v-show="A == 'renwu'"
+            >
+                <el-menu-item index="dabiao">
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">任务大表</span>
+                </el-menu-item>
+            </el-menu>
         </div>
+
         <div class="content_box">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
@@ -76,6 +89,8 @@
                     return '财务';
                 }else if(this.A == 'caigou') {
                     return '采购';
+                }else if(this.A == 'renwu') {
+                    return '任务';
                 }
             },
             B_chinese(){
@@ -89,6 +104,8 @@
                     return '凭证管理';
                 }else if(this.B == 'zhuanxiangyewu') {
                     return '专项业务管理';
+                }else if(this.B == 'dabiao') {
+                    return '任务大表';
                 }
             }
         },

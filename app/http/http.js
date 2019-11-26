@@ -57,6 +57,11 @@ const getConfig = {
     },
     tuichu(){
         return instance.get('/api/logout');
+    },
+    allrw({page}){
+        return instance.get('/api/allrw?' + querystring.stringify({
+            page
+        }));
     }
 };
 

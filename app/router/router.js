@@ -62,7 +62,6 @@ const router = new VueRouter({
                         }
                     ]
                 },
-                ,
                 {
                     path: 'caiwu',
                     component: () => import('../layouts/Side.vue'),
@@ -87,6 +86,25 @@ const router = new VueRouter({
                             meta: {
                                 'A': 'caiwu',
                                 'B': 'zhuanxiangyewu'
+                            }
+                        }
+                    ]
+                },
+                {
+                    path: 'renwu',
+                    component: () => import('../layouts/Side.vue'),
+                    name: 'renwu',
+                    redirect: {
+                        name: 'dabiao'
+                    },
+                    children: [
+                        {
+                            path: 'dabiao',
+                            component: () => import('../views/rw-dabiao/rw-dabiao.vue'),
+                            name: 'dabiao',
+                            meta: {
+                                'A': 'renwu',
+                                'B': 'dabiao'
                             }
                         }
                     ]
