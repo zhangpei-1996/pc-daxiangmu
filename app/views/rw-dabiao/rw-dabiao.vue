@@ -77,7 +77,7 @@
     .itemspan{
         margin-right: 10px;
         cursor: pointer;
-    }
+    } 
     .itemavatar{
         width: 30px;
         height: 30px;
