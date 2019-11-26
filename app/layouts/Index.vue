@@ -32,7 +32,7 @@
                 <el-menu-item index="index">首页</el-menu-item>
                 <el-menu-item index="caigou">采购管理</el-menu-item>
                 <el-menu-item index="caiwu">财务管理</el-menu-item>
-                <el-menu-item index="renwu">任务大表</el-menu-item>
+                <el-menu-item index="renwu">任务</el-menu-item>
             </el-menu>
            
         </el-header>

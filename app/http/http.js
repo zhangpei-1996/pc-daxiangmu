@@ -58,9 +58,20 @@ const getConfig = {
     tuichu(){
         return instance.get('/api/logout');
     },
-    allrw({page}){
+    allrw({page, deadline, type}){
+        if(deadline == null) deadline = [];
+
         return instance.get('/api/allrw?' + querystring.stringify({
-            page
+            page,
+            deadline: deadline.map(item => Date.parse(item)).join('to'),
+            type
+        }));
+    },
+    setdone({yixuan}){
+     
+
+        return instance.get('/api/setdone?' + querystring.stringify({
+            ids: yixuan.join('v')
         }));
     }
 };
