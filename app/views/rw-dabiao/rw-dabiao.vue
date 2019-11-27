@@ -1,54 +1,72 @@
 <template>
     <div>
-
-        <h4>共{{total}}个任务符合要求</h4>
-        <div class="toolbox">
-            筛选状态：
-            <el-tag
-                type="info"
-                effect="dark"
-                @click="changeType('')"
-                :class="{'cur': type == ''}"
-            >
-                全部
-            </el-tag>
-            <el-tag
-                type=""
-                effect="dark"
-                @click="changeType(1)"
-                :class="{'cur': type == '1'}"
-            >
-                进行中
-            </el-tag>
-            <el-tag
-                type="success"
-                effect="dark"
-                @click="changeType(2)"
-                :class="{'cur': type == '2'}"
-            >
-                已完成
-            </el-tag>
-            <el-tag
-                type="danger"
-                effect="dark"
-                @click="changeType(3)"
-                :class="{'cur': type == '3'}"
-            >
-                已超期
-            </el-tag>
+        <div class="topbox">
+            <el-button type="warning" @click="isShowDialog = true">增加任务</el-button>
         </div>
-        <el-date-picker
-            class="cdp"
-            v-model="deadline"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions"
+        <el-dialog
+            title="增加任务"
+            :visible.sync="isShowDialog"
+            width="800px"
+            @on-close="isShowDialog = false"
         >
-        </el-date-picker>
+            <AddRw ref="addrw"/>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button>取 消</el-button>
+                <el-button type="primary" @click="dialogOkHan">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <div class="row">
+            <h4>共{{total}}个任务符合要求</h4>
+            <div class="toolbox">
+                筛选状态：
+                <el-tag
+                    type="info"
+                    effect="dark"
+                    @click="changeType('')"
+                    :class="{'cur': type == ''}"
+                >
+                    全部
+                </el-tag>
+                <el-tag
+                    type=""
+                    effect="dark"
+                    @click="changeType(1)"
+                    :class="{'cur': type == '1'}"
+                >
+                    进行中
+                </el-tag>
+                <el-tag
+                    type="success"
+                    effect="dark"
+                    @click="changeType(2)"
+                    :class="{'cur': type == '2'}"
+                >
+                    已完成
+                </el-tag>
+                <el-tag
+                    type="danger"
+                    effect="dark"
+                    @click="changeType(3)"
+                    :class="{'cur': type == '3'}"
+                >
+                    已超期
+                </el-tag>
+            </div>
+            <el-date-picker
+                class="cdp"
+                v-model="deadline"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="pickerOptions"
+            >
+            </el-date-picker>
+        </div>
         <el-table
             v-loading="loading"
             ref="multipleTable"
@@ -119,13 +137,18 @@
 </template>
 
 <script>
-    import {get} from '../../http/http.js';
+    import {get, post} from '../../http/http.js';
     import moment from 'moment';
+    import AddRw from './AddRw.vue';
 
  
     export default {
+        components: {
+            AddRw
+        },
         data () {
             return {
+                isShowDialog: false,
                 loading: false,
                 yixuan: [],
                 tableData: [],
@@ -176,6 +199,15 @@
         },
         methods: {
             moment,
+            dialogOkHan(){
+                console.log(this.$refs.addrw);
+                post('addrw', {
+                    title: this.$refs.addrw.title,
+                    detail: this.$refs.addrw.detail,
+                    executors: this.$refs.addrw.executors.map(item => item.id),
+                    deadline: Date.parse(this.$refs.addrw.deadline)
+                });
+            },
             handleSelectionChange(val){
                 this.yixuan = val.map(item => item.id);
             },
@@ -281,5 +313,8 @@
     }
     .piliangbox{
         float: left;
+    }
+    .row{
+        overflow: hidden;
     }
 </style>

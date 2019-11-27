@@ -68,10 +68,17 @@ const getConfig = {
         }));
     },
     setdone({yixuan}){
-     
-
         return instance.get('/api/setdone?' + querystring.stringify({
             ids: yixuan.join('v')
+        }));
+    },
+    alluser({bm}){
+        return instance.get('/api/alluser?' + querystring.stringify({
+            bm
+        }));
+    },
+    allbm(){
+        return instance.get('/api/allbm?' + querystring.stringify({
         }));
     }
 };
@@ -83,6 +90,11 @@ const postConfig = {
         return instance.post('/api/login', {
             username: params.username,
             password: params.password
+        })
+    },
+    addrw({title, detail, deadline, executors}){
+        return instance.post('/api/addrw', {
+            title, detail, deadline, executors
         })
     }
 };
