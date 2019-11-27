@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="topbox">
-            <el-button type="warning" @click="isShowDialog = true">增加任务</el-button>
+            <el-button type="warning" @click="isShowDialog = true; nowModifyObj = null">增加任务</el-button>
         </div>
         <el-dialog
-            title="增加任务"
+            :title="nowModifyObj == null ? '增加任务' : '修改id为' + nowModifyObj.id + '的任务' "
             :visible.sync="isShowDialog"
             width="800px"
             @on-close="isShowDialog = false"
         >
-            <AddRw ref="addrw"/>
+            <AddRw ref="addrw" :nowModifyObj="nowModifyObj" />
 
             <span slot="footer" class="dialog-footer">
                 <el-button>取 消</el-button>
@@ -120,6 +120,14 @@
                     </el-tag>
                 </template>
             </el-table-column>
+            <el-table-column
+                label="操作"
+            >
+                <template slot-scope="scope">
+                    <!-- TODO -->
+                    <el-button @click="xgHan(scope.row)">修改</el-button>
+                </template>
+            </el-table-column>
         </el-table>
         <div class="kong"></div>
         <el-pagination
@@ -131,7 +139,7 @@
         >
         </el-pagination>
         <div class="piliangbox">
-            <el-button type="success" @click="piliangHan">批量设置打钩的{{}}个任务为完成状态</el-button>
+            <el-button type="success" @click="piliangHan">批量设置打钩的任务为完成状态</el-button>
         </div>
     </div>
 </template>
@@ -148,6 +156,7 @@
         },
         data () {
             return {
+                nowModifyObj: null,
                 isShowDialog: false,
                 loading: false,
                 yixuan: [],
@@ -199,21 +208,54 @@
         },
         methods: {
             moment,
+            xgHan(row){
+                this.nowModifyObj = row;
+                console.log(row);
+                this.isShowDialog = true;
+            },
             dialogOkHan(){
-                console.log(this.$refs.addrw);
-                post('addrw', {
-                    title: this.$refs.addrw.title,
-                    detail: this.$refs.addrw.detail,
-                    executors: this.$refs.addrw.executors.map(item => item.id),
-                    deadline: Date.parse(this.$refs.addrw.deadline)
-                });
+                // console.log(this.$refs.addrw);
+
+                if(this.nowModifyObj == null){
+                    post('addrw', {
+                        title: this.$refs.addrw.title,
+                        detail: this.$refs.addrw.detail,
+                        executors: this.$refs.addrw.executors.map(item => item.id),
+                        deadline: Date.parse(this.$refs.addrw.deadline)
+                    }).then(data => {
+                          this.isShowDialog = false;
+                         this.page = 1;
+                         this.$message({
+                            message: '增加成功',
+                            type: 'success'
+                         });
+                         this.loadData();
+                    });
+                }else {
+                    post('updaterw', {
+                        id: this.nowModifyObj.id,
+                        title: this.$refs.addrw.title,
+                        detail: this.$refs.addrw.detail,
+                        executors: this.$refs.addrw.executors.map(item => item.id),
+                        deadline: Date.parse(this.$refs.addrw.deadline)
+                    }).then(data => {
+                          this.isShowDialog = false;
+                         this.page = 1;
+                         this.loadData();
+                          this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                         });
+                    });;
+                }
+
+              
             },
             handleSelectionChange(val){
                 this.yixuan = val.map(item => item.id);
             },
             piliangHan(){
-                
-                 this.$confirm('你正要将个任务批量设置为已完成，举动危险！操作不可逆！请确认！', '提示', {
+                this.$confirm('你正要将个任务批量设置为已完成，举动危险！操作不可逆！请确认！', '提示', {
                         confirmButtonText: '是的，我明白我在做什么，真的要设置',
                         cancelButtonText: '不设置',
                         type: 'warning'
@@ -223,8 +265,7 @@
                                 type: 'success',
                                 message: '删除成功!'
                             });
-                        })
-                        
+                        });
                     }).catch(() => {
                         this.$message({
                             type: 'info',

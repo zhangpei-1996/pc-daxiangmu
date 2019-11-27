@@ -78,8 +78,10 @@ const getConfig = {
         }));
     },
     allbm(){
-        return instance.get('/api/allbm?' + querystring.stringify({
-        }));
+        return instance.get('/api/allbm');
+    },
+    chanpin(){
+        return instance.get('/api/chanpin');
     }
 };
 
@@ -94,7 +96,12 @@ const postConfig = {
     },
     addrw({title, detail, deadline, executors}){
         return instance.post('/api/addrw', {
-            title, detail, deadline, executors
+            title, detail, deadline, executor: executors
+        })
+    },
+    updaterw({id, title, detail, deadline, executors}){
+        return instance.post('/api/updaterw', {
+            id, title, detail, deadline, executor: executors
         })
     }
 };

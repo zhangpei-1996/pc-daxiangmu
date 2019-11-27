@@ -41,15 +41,23 @@
     import ChooseExecutor from './ChooseExecutor.vue';
 
     export default {
+        props: ['nowModifyObj'],
         data() {
+            if(this.nowModifyObj == null){
+                return {
+                     isShowMenu: false,
+                    executors:  [],
+                    title:  '',
+                    detail:   '',
+                    deadline:   ''
+                }
+            }
             return {
                 isShowMenu: false,
-                executors: [
-
-                ],
-                title: '',
-                detail: '',
-                deadline: ''
+                executors: this.nowModifyObj.executor  ,
+                title: this.nowModifyObj.title ,
+                detail:  this.nowModifyObj.detail ,
+                deadline: new Date(this.nowModifyObj.deadline) 
             }
         },
         components: {
